@@ -1,6 +1,6 @@
-package org.example.employeedatabasee;
+package com.example.employeedatabasesystem;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Employee {
     private int id;
@@ -9,6 +9,7 @@ public class Employee {
     private double salary;
     private Date hireDate;
 
+    // Constructor
     public Employee(int id, String name, String position, double salary, Date hireDate) {
         this.id = id;
         this.name = name;
@@ -17,7 +18,7 @@ public class Employee {
         this.hireDate = hireDate;
     }
 
-    // Геттеры и сеттеры для всех полей
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -58,10 +59,10 @@ public class Employee {
         this.hireDate = hireDate;
     }
 
+    // toString() method to print the employee details
     @Override
     public String toString() {
-        return "Employee{" +
-                "id=" + id +
+        return "Employee{id=" + id +
                 ", name='" + name + '\'' +
                 ", position='" + position + '\'' +
                 ", salary=" + salary +
