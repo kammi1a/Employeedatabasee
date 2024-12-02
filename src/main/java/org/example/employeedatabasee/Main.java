@@ -1,27 +1,45 @@
-package org.example.employeedatabasee;
+package com.example.employeedatabasesystem;
 
-import java.sql.Date;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         EmployeeData employeeData = new EmployeeData();
 
-        // Создание нового сотрудника
-        employeeData.createEmployee("George Black", "Analyst", 85000.0, Date.valueOf("2024-01-01"));
+        Employee newEmployee1 = new Employee(1, "John Doe", "Developer", 75000, java.sql.Date.valueOf("2021-02-16"));
+        Employee newEmployee2 = new Employee(2, "Jane Smith", "Manager", 95000, java.sql.Date.valueOf("2019-03-22"));
+        Employee newEmployee3 = new Employee(3, "Alice Brown", "HR Specialist", 65000, java.sql.Date.valueOf("2018-07-11"));
 
-        // Получение сотрудника по ID
-        Employee employee = employeeData.getEmployeeById(1); // Замените 1 на действующий ID из вашей базы данных
-        if (employee != null) {
-            employee.setPosition("Senior Analyst");
-            System.out.println("Updated employee: " + employee);
+        employeeData.createEmployee(newEmployee1);
+        employeeData.createEmployee(newEmployee2);
+        employeeData.createEmployee(newEmployee3);
+
+        // 1. Get employee by ID 
+        Employee employeeById = employeeData.getEmployeeById(1);
+        if (employeeById != null) {
+            System.out.println("Employee with ID 1: " + employeeById);
         } else {
-            System.out.println("Employee not found!");
+            System.out.println("Employee with ID 1 not found.");
         }
 
-        // Получение всех сотрудников
-        employeeData.getAllEmployees();
+        // 2. Get all employees
+        List<Employee> allEmployees = employeeData.getAllEmployees();
+        System.out.println("All employees: " + allEmployees);
 
-        // Удаление сотрудника
-        employeeData.deleteEmployee(4); // Удаление сотрудника с ID 4
+        // 3. Update an employee's details (e.g., update salary of employee with ID 1)
+        if (employeeById != null) {
+            employeeById.setSalary(8500); 
+            employeeData.updateEmployee(employeeById); 
+            System.out.println("Updated employee: " + employeeById);
+        }
+
+        // 4. Delete an employee 
+        int employeeIdToDelete = 2;
+        employeeData.deleteEmployee(employeeIdToDelete);
+        System.out.println("Deleted employee with ID " + employeeIdToDelete);
+
+        // Optional: Get all employees again to confirm the deletion
+        allEmployees = employeeData.getAllEmployees();
+        System.out.println("All employees after deletion: " + allEmployees);
     }
 }
