@@ -24,4 +24,7 @@ Once the application is running, you can:
 
 
 ---
+![Uploading Снимок экрана 2024-12-02 в 15.13.18.png…]()
+![Uploading Снимок экрана 2024-12-02 в 15.13.08.png…]()
+
 
