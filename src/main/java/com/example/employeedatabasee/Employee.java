@@ -1,5 +1,4 @@
 package com.example.employeedatabasee;
-
 import java.util.Date;
 
 public class Employee {
@@ -9,7 +8,6 @@ public class Employee {
     private double salary;
     private Date hireDate;
 
-    // Constructor
     public Employee(int id, String name, String position, double salary, Date hireDate) {
         this.id = id;
         this.name = name;
@@ -18,7 +16,6 @@ public class Employee {
         this.hireDate = hireDate;
     }
 
-    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -59,7 +56,6 @@ public class Employee {
         this.hireDate = hireDate;
     }
 
-    // toString() method to print the employee details
     @Override
     public String toString() {
         return "Employee{id=" + id +
