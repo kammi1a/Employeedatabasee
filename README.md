@@ -24,7 +24,10 @@ Once the application is running, you can:
 
 
 ---
-![Uploading Снимок экрана 2024-12-02 в 15.13.18.png…]()
-![Uploading Снимок экрана 2024-12-02 в 15.13.08.png…]()
+
+<img width="1470" alt="Снимок экрана 2024-12-02 в 15 13 18" src="https://github.com/user-attachments/assets/86288bd7-6899-4385-8025-71916478f700">
+<img width="1470" alt="Снимок экрана 2024-12-02 в 15 13 08" src="https://github.com/user-attachments/assets/6d9b5b30-cdee-4475-bb03-346be4976d83">
+
+
 
 
