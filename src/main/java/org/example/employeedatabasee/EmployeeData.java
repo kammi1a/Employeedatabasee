@@ -1,114 +1,95 @@
-package org.example.employeedatabasee;
-
+package com.example.employeedatabasesystem;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EmployeeData {
+
     private static final String URL = "jdbc:postgresql://localhost:5432/employee_db";
-    private static final String USER = "postgres";
+    private static final String USER = "postgres"; 
     private static final String PASSWORD = "123456";
 
-    // Получаем соединение с базой данных
     public Connection getConnection() throws SQLException {
-        try {
-            // Загружаем драйвер PostgreSQL
-            Class.forName("org.postgresql.Driver");
-            return DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (ClassNotFoundException e) {
-            throw new SQLException("PostgreSQL JDBC Driver not found.", e);
-        }
+        return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
-    // Создание нового сотрудника
-    public void createEmployee(String name, String position, double salary, Date hireDate) {
-        String query = "INSERT INTO employee (name, position, salary, hire_date) VALUES (?, ?, ?, ?)";
-
+    public void createEmployee(Employee employee) {
+        String sql = "INSERT INTO employee (name, position, salary, hire_date) VALUES (?, ?, ?, ?)";
         try (Connection connection = getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
-
-            stmt.setString(1, name);
-            stmt.setString(2, position);
-            stmt.setDouble(3, salary);
-            stmt.setDate(4, hireDate);
-            stmt.executeUpdate();
-
-            System.out.println("New employee created: Name: " + name + ", Position: " + position + ", Salary: " + salary);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, employee.getName());
+            statement.setString(2, employee.getPosition());
+            statement.setDouble(3, employee.getSalary());
+            statement.setDate(4, new java.sql.Date(employee.getHireDate().getTime()));
+            int rowsAffected = statement.executeUpdate();
+            System.out.println(rowsAffected + " row(s) inserted.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    // Получение сотрудника по ID
     public Employee getEmployeeById(int id) {
-        String query = "SELECT * FROM employee WHERE id = ?";
+        String sql = "SELECT * FROM employee WHERE id = ?";
         try (Connection connection = getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
-
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                Employee employee = new Employee(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("position"),
-                        rs.getDouble("salary"),
-                        rs.getDate("hire_date")
-                );
-                return employee;
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return new Employee(resultSet.getInt("id"),
+                            resultSet.getString("name"),
+                            resultSet.getString("position"),
+                            resultSet.getDouble("salary"),
+                            resultSet.getDate("hire_date"));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return null; 
     }
 
-    // Получение всех сотрудников
-    public void getAllEmployees() {
-        String query = "SELECT * FROM employee";
+    public List<Employee> getAllEmployees() {
+        List<Employee> employees = new ArrayList<>();
+        String sql = "SELECT * FROM employee";
         try (Connection connection = getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            System.out.println("All Employees:");
-            while (rs.next()) {
-                Employee employee = new Employee(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("position"),
-                        rs.getDouble("salary"),
-                        rs.getDate("hire_date")
-                );
-                System.out.println(employee);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+            while (resultSet.next()) {
+                employees.add(new Employee(resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("position"),
+                        resultSet.getDouble("salary"),
+                        resultSet.getDate("hire_date")));
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return employees;
+    }
+
+    public void updateEmployee(Employee employee) {
+        String sql = "UPDATE employee SET name = ?, position = ?, salary = ?, hire_date = ? WHERE id = ?";
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, employee.getName());
+            statement.setString(2, employee.getPosition());
+            statement.setDouble(3, employee.getSalary());
+            statement.setDate(4, new java.sql.Date(employee.getHireDate().getTime()));
+            statement.setInt(5, employee.getId());
+            int rowsAffected = statement.executeUpdate();
+            System.out.println(rowsAffected + " row(s) updated.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    // Удаление сотрудника по ID
     public void deleteEmployee(int id) {
-        String query = "DELETE FROM employee WHERE id = ?";
+        String sql = "DELETE FROM employee WHERE id = ?";
         try (Connection connection = getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
-
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
-            System.out.println("Employee with ID " + id + " has been deleted.");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Обновление информации о сотруднике
-    public void updateEmployeePosition(int id, String newPosition) {
-        String query = "UPDATE employee SET position = ? WHERE id = ?";
-        try (Connection connection = getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
-
-            stmt.setString(1, newPosition);
-            stmt.setInt(2, id);
-            stmt.executeUpdate();
-            System.out.println("Employee with ID " + id + " position updated to: " + newPosition);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            int rowsAffected = statement.executeUpdate();
+            System.out.println(rowsAffected + " row(s) deleted.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
