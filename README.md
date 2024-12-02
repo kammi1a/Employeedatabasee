@@ -24,10 +24,11 @@ Once the application is running, you can:
 
 
 ---
-
-<img width="1470" alt="Снимок экрана 2024-12-02 в 15 13 18" src="https://github.com/user-attachments/assets/86288bd7-6899-4385-8025-71916478f700">
-<img width="1470" alt="Снимок экрана 2024-12-02 в 15 13 08" src="https://github.com/user-attachments/assets/6d9b5b30-cdee-4475-bb03-346be4976d83">
+<img width="1470" alt="Снимок экрана 2024-12-02 в 20 00 47" src="https://github.com/user-attachments/assets/f7d42c0a-9377-4ba4-b4bb-ef6d26a1dcb9">
 
 
+
+
+<img width="1470" alt="Снимок экрана 2024-12-02 в 20 04 40" src="https://github.com/user-attachments/assets/fec8bf26-8c4f-454f-b2fa-19d037cab45a">
 
 
